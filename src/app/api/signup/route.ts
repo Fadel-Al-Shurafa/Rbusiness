@@ -1,10 +1,7 @@
-import { connect } from "../../dbConfig/dbConfig";
-
-import User from "../../models/userModel";
+import pool from "../../dbConfig/dbConfig";
+import bcrypt from "bcryptjs";
 import { NextRequest, NextResponse } from "next/server";
-import bcryptjs from "bcryptjs";
 
-connect()
 
 export async function POST(request: NextRequest) {
 
@@ -13,35 +10,28 @@ export async function POST(request: NextRequest) {
     const { username, email, password } = await request.json();
     console.log({ username, email, password });
 
+    // Generate a hash of the password
+    const hashedPassword = await bcrypt.hash(password, 10);
 
-    //check if user already exists
-    const user = await User.findOne({ email });
+    // Check if the pool has an active connection
+    const connection = await pool.getConnection();
+    connection.release(); // Release the connection immediately
 
-    if (user) {
-      return NextResponse.json({ error: "User already exist" }, { status: 400 });
-    }
+    // If the code reaches this point, it means the connection was successful
+    console.log("Connected to the database.");
 
+    // Perform your insert query here
+    const insertQuery =
+      "INSERT INTO users (username, email, password) VALUES (?, ?, ?)";
+    const insertData = [username, email, hashedPassword];
+    await pool.query(insertQuery, insertData);
 
-    const salt = await bcryptjs.genSalt(10)
-    const hashedPassword = await bcryptjs.hash(password, salt)
-
-    const newUser = new User({
-      username,
-      email,
-      password: hashedPassword
-    });
-
-    const savedUser = await newUser.save();
-    console.log('savedUser =' + savedUser);
-
-    return NextResponse.json({
-      message: "User created successfully",
-      success: true,
-      savedUser
-    })
-
-
+    return NextResponse.json({ error: "Data inserted to table user" }, { status: 201 });
   } catch (error: any) {
     return NextResponse.json({ error: "Error in fetching" }, { status: 500 });
   }
 }
+
+
+
+

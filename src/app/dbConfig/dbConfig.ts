@@ -1,20 +1,11 @@
-import mongoose from "mongoose";
+import mysql from 'mysql2/promise';
 
-export async function connect(){
-  try {
-    mongoose.connect(process.env.MONGODB_URI!);
-    const connection = mongoose.connection;
+const pool = mysql.createPool({
+  host: '127.0.0.1',
+  port: 3306, // Specify the port as a number, not a string
+  user: 'root',
+  password: 'Frms@2016',
+  database: 'test'
+});
 
-    connection.on('connected', () => {
-      console.log('Connected to MongoDB');
-    })
-
-    connection.on('error', (error) => {
-      console.log('Error to MongoDB' + error);
-      process.exit();
-    })
-
-  } catch (error) {
-    console.error('MongoDB connection error:' + error);
-  }
-}
+export default pool;

@@ -19,7 +19,7 @@ export default function Profile() {
         await new Promise((resolve) => setTimeout(resolve, 2000));
         const res = await axios.get("/api/me");
         console.log(res.data);
-        setData(res.data.data._id);
+        setData(res.data.data.id); // Assuming the user ID is stored as 'id' in the response
         setLoading(false);
       } catch (error) {
         console.error("Error fetching data:", error);
@@ -35,7 +35,7 @@ export default function Profile() {
     }
   }, [data]);
 
- 
+
 
   // const getUserDetails = async () => {
   //   const res = await axios.get('/api/me')
@@ -45,13 +45,13 @@ export default function Profile() {
 
   return (
     <>
-    {loading ? (
-      <Loading />
-    ) : (
-      <div className={styles.UserProfile}>
-       
-      </div>
-    )}
-  </>
+      {loading ? (
+        <Loading />
+      ) : (
+        <div className={styles.UserProfile}>
+
+        </div>
+      )}
+    </>
   );
 }
