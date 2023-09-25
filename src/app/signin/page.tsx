@@ -12,6 +12,7 @@ import Loading from "../components/loading";
 
 export default function SigninComponent() {
   const router = useRouter();
+  
   const [loading, setLoading] = useState(false);
   const [user, setUser] = React.useState({
     email: "",

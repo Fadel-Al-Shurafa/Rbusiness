@@ -19,17 +19,25 @@ export async function POST(request: NextRequest) {
     // Retrieve the user from the database based on the email
     const selectQuery = "SELECT * FROM users WHERE email = ?";
     const selectData = [email];
+    console.log(selectData);
+
     const [rows] = await pool.query(selectQuery, selectData);
+
+    console.log("Rows:", rows);
 
     const typedRows = rows as RowDataPacket[];
     const rowDataPacket: RowDataPacket | undefined = typedRows[0];
+    console.log("rowDataPacket:", rowDataPacket);
+
     const user: User | undefined = rowDataPacket
       ? {
-          id: rowDataPacket.id,
-          username: rowDataPacket.username,
-          email: rowDataPacket.email,
-        }
+        id: rowDataPacket.id,
+        username: rowDataPacket.username,
+        email: rowDataPacket.email,
+      }
       : undefined;
+
+    console.log("user:", user);
 
     if (!user) {
       // User does not exist
@@ -84,3 +92,5 @@ export async function POST(request: NextRequest) {
     );
   }
 }
+
+

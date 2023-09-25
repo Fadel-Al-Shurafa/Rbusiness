@@ -57,9 +57,13 @@
 .userProfileflex{
     margin: 50px 0;
 }
+.bodyOrders {
+    height: 100%;
+}
 .containerOrders {
+
     display: flex;
-    justify-content: space-around;
+    justify-content: center;
     align-items: center;
     text-align: center;
     flex-wrap: wrap;
@@ -67,14 +71,32 @@
     
 }
 .flexOrders {
-    background-color: #000;
+    
     height: 300px;
     width: 300px;
     margin: 80px;
 }
+.flexOrdersItems{
+    padding: 10px 0;
+}
+.submit {
+    background-color: #3d3d;
+    border: none;
+    padding: 6px 12px;
+    border-radius: 5px;
+    font-size: 90%;
+    transition: all 0.5s;
 
+}
+.submit:hover {
+    opacity: 0.7;
+    
+}
 
 /* navbar restaurnt */
+.navbarBody{
+    height: 100vh;
+}
 .bodyRestaurant {
     height: 100%;
 }
@@ -138,4 +160,10 @@
 
 .close:hover {
     opacity: 0.7;
+}
+
+.img {
+    margin: auto;
+    height: 200px;
+    width: 200px;
 }
