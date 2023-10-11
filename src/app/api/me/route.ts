@@ -6,7 +6,7 @@ import pool from "../../dbConfig/dbConfig";
 export async function GET(request: NextRequest) {
   try {
     const userId = await getDataFromToken(request);
-    console.log(userId)
+
     // Retrieve the user from the database based on the user ID
     const selectQuery = "SELECT * FROM users WHERE id = ?";
     const selectData = [userId];
@@ -41,3 +41,5 @@ export async function GET(request: NextRequest) {
     );
   }
 }
+
+
